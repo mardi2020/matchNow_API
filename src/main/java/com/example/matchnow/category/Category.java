@@ -16,6 +16,6 @@ public class Category {
     @Column(name="category_name")
     private String categoryName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Project project;
 }

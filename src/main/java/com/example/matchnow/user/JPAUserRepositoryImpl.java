@@ -3,36 +3,40 @@ package com.example.matchnow.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class JPAUserRepositoryImpl implements UserRepository{
 
+    @PersistenceContext
+    private final EntityManager em;
 
     @Override
-    public void delete(long id) {
-
-    }
+    public void delete(long id) { }
 
     @Override
     public void join(User user) {
-
+        em.persist(user);
     }
 
     @Override
-    public Optional<User> findById(long id) {
-        return Optional.empty();
+    public User findById(long id) {
+        return em.find(User.class, id);
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        return em.createQuery("SELECT user FROM User user", User.class)
+                .getResultList();
     }
 
     @Override
-    public Optional<User> findByEmail(Email email) {
-        return Optional.empty();
+    public List<User> findByEmail(String email) {
+        return em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 }

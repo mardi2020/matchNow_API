@@ -37,3 +37,4 @@ out/
 .vscode/
 /src/main/resources/dummyData.sql
 /src/main/resources/schema.sql
+java/

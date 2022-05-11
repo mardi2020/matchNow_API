@@ -2,7 +2,6 @@ package com.example.matchnow.user;
 
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserRepository {
 
@@ -10,9 +9,9 @@ public interface UserRepository {
 
     void join(User user);
 
-    Optional<User> findById(long id);
+    User findById(long id);
 
     List<User> findAll();
 
-    Optional<User> findByEmail(Email email);
+    List<User> findByEmail(String email);
 }

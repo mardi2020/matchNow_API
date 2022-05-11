@@ -10,11 +10,13 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name="USERS")
 @Getter @Setter
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="user_id")
@@ -23,9 +25,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Embedded
-    @Column(nullable = false)
-    private Email email;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -38,10 +39,13 @@ public class User {
 
     private String job;
 
-    @Column(name="last_login_at")
+    @Column(name="last_login_at", nullable = false, insertable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date LastLoginAt;
 
-    @Column(name="create_at")
+    @Column(name="create_at",nullable = false,
+            updatable = false, insertable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createAt;
 
     @OneToMany(mappedBy = "user") // user가 가진 스킬 스택
@@ -61,4 +65,5 @@ public class User {
     // 받은 쪽지 목록
     @OneToMany(mappedBy = "recevier")
     private List<Message> receivedMessageList = new ArrayList<>();
+
 }

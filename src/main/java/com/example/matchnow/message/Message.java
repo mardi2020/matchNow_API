@@ -23,10 +23,10 @@ public class Message {
     @Column(name="main_text", nullable = false)
     private String mainText;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User sender;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User recevier;
 
     @Column(nullable = false, name="send_date")

@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -21,27 +19,6 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Transactional
-    public void join(User user) {
-        validateDuplicateUser(user);
-        if(!checkValidEmail(user.getEmail()))
-            throw new IllegalStateException("올바르지 않는 email입니다.");
-
-        userRepository.join(user);
-    }
-
-    private void validateDuplicateUser(User user) {
-        List<User> users = userRepository.findByEmail(user.getEmail());
-        if(!users.isEmpty())
-            throw new IllegalStateException("이미 가입되어 있는 email입니다.");
-    }
-
-    private boolean checkValidEmail(String email) {
-        String regexPattern = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return Pattern.compile(regexPattern)
-                .matcher(email)
-                .matches();
-    }
 
     public List<User> findUsers() {
         return userRepository.findAll();
@@ -51,11 +28,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(userId);
     }
 
+    public User findUserByEmail(String email) {
+        List<User> users = userRepository.findByEmail(email);
+        if (users.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with email:" + email);
+        }
+        return users.get(0);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // 로그인을 하기 위해 가입된 user정보를 조회하는 메서드
 
         List<User> users = userRepository.findByEmail(email);
+        if (users.isEmpty()) {
+            throw new UsernameNotFoundException("User not found with email:" + email);
+        }
         User user = users.get(0);
 //        System.out.println("user = " + user);
 

@@ -4,6 +4,7 @@ import com.example.matchnow.category.Category;
 import com.example.matchnow.user.User;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name="PROJECTS")
 @Setter @Getter
+@ToString
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,8 +38,7 @@ public class Project {
     private int wantCnt;
 
     @Column(name="now_cnt", nullable = false)
-    @ColumnDefault("1")
-    private int nowPeopleCnt;
+    private int nowPeopleCnt = 1;
 
     @ManyToMany
     private List<User> userList = new ArrayList<>(); // 프로젝트에 포함된 유저들
@@ -49,13 +50,14 @@ public class Project {
     private Date createAt;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('RECRUITING', 'COMPLETED', 'CANCELED') DEFAULT 'RECRUITING'")
     private State state;
 
     @OneToMany(mappedBy = "project")
     private List<Category> categoryList = new ArrayList<>();
 
     /* writer 설정 */
-    public void setUser(User user) {
+    public void setWriter(User user) {
         this.user = user;
         user.getWrittenProjectList().add(this);
     }

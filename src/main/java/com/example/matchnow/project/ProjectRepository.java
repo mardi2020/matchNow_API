@@ -1,12 +1,19 @@
 package com.example.matchnow.project;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProjectRepository {
 
-    Optional<Project> findById(long id);
+    List<Project> findById(Long id);
 
-    void updateProject(Project project);
+    void updateProjectPost(Project project);
 
-    long postProject(Project project);
+    void uploadProjectPost(Project project);
+
+    void deleteProjectPost(Long id);
+
+    List<Project> findAll();
+
+    void changePostState(Long id); // 마감, 모집, 취소됨
 }

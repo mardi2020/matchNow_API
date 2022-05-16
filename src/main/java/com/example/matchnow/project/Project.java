@@ -22,10 +22,11 @@ public class Project {
     @Column(name="project_id")
     private Long projectId;
 
+    @Column(nullable = false)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user; // writer
 
     @Column(name="main_text", nullable = false)
@@ -37,8 +38,10 @@ public class Project {
     @Column(name="want_cnt", nullable = false)
     private int wantCnt;
 
-    @Column(name="now_cnt", nullable = false)
-    private int nowPeopleCnt = 1;
+    @Column(name="now_cnt",
+            columnDefinition = "INT DEFAULT 1'"
+    )
+    private int nowPeopleCnt;
 
     @ManyToMany
     private List<User> userList = new ArrayList<>(); // 프로젝트에 포함된 유저들

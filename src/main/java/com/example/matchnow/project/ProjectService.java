@@ -1,9 +1,12 @@
 package com.example.matchnow.project;
 
 import com.example.matchnow.mapper.ProjectMapper;
+import com.example.matchnow.user.User;
+import com.example.matchnow.user.Writer;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,20 @@ public class ProjectService {
 
     private final ModelMapper modelMapper;
 
+    @Transactional
     public void uploadProjectPost(UploadProjectDTO projectDTO) {
-        Project projectEntity = modelMapper.map(projectDTO, Project.class);
+        Project projectEntity = new Project();
+        User user = new User();
+        user.setUsername(projectDTO.getUser().getUsername());
+        user.setUserId(projectDTO.getUser().getUserId());
+
+        projectEntity.setMainText(projectDTO.getMainText());
+        projectEntity.setTitle(projectDTO.getTitle());
+        projectEntity.setWriter(user);
+        projectEntity.setInputImage(projectDTO.getImage());
+        projectEntity.setWantCnt(projectDTO.getWantCnt());
+        projectEntity.setNowPeopleCnt(1);
+
         projectRepository.uploadProjectPost(projectEntity);
     }
 
@@ -27,13 +42,9 @@ public class ProjectService {
 
         List<PostedProjectDTO> postedProjectDTO = new ArrayList<>();
         for (Project project : projectList) {
-            System.out.println("project = " + project);
             postedProjectDTO.add(modelMapper.map(project, PostedProjectDTO.class));
         }
 
-        for (PostedProjectDTO projectDTO : postedProjectDTO) {
-            System.out.println("projectDTO = " + projectDTO);
-        }
         return postedProjectDTO;
     }
 }

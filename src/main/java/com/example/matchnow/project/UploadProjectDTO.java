@@ -1,11 +1,12 @@
 package com.example.matchnow.project;
 
-import com.example.matchnow.user.User;
+import com.example.matchnow.user.Writer;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class UploadProjectDTO {
@@ -18,8 +19,13 @@ public class UploadProjectDTO {
     @Size(min = 1)
     private String mainText;
 
-    private User user;
+    private Writer user;
 
     private String image;
 
+    private int wantCnt;
+
+    private int nowPeopleCnt;
+
+    private List<Writer> userList;
 }

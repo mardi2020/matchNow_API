@@ -1,8 +1,7 @@
 package com.example.matchnow.project;
 
-import com.example.matchnow.mapper.ProjectMapper;
+
 import com.example.matchnow.user.User;
-import com.example.matchnow.user.Writer;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +31,7 @@ public class ProjectService {
         projectEntity.setInputImage(projectDTO.getImage());
         projectEntity.setWantCnt(projectDTO.getWantCnt());
         projectEntity.setNowPeopleCnt(1);
+        projectEntity.setState(State.RECRUITING);
 
         projectRepository.uploadProjectPost(projectEntity);
     }
@@ -46,5 +45,23 @@ public class ProjectService {
         }
 
         return postedProjectDTO;
+    }
+
+    @Transactional
+    public void updateProjectPost(UpdateProjectDTO updateProjectDTO) {
+        Project projectEntity = new Project();
+
+        projectEntity.setProjectId(updateProjectDTO.getProjectId());
+        projectEntity.setTitle(updateProjectDTO.getTitle());
+        projectEntity.setMainText(updateProjectDTO.getMainText());
+        projectEntity.setInputImage(updateProjectDTO.getImage());
+        projectEntity.setState(updateProjectDTO.getState());
+
+        projectRepository.updateProjectPost(projectEntity);
+    }
+
+    @Transactional
+    public void deleteProjectPost(Long id) {
+        projectRepository.deleteProjectPost(id);
     }
 }

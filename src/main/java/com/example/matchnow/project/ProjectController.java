@@ -3,10 +3,7 @@ package com.example.matchnow.project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +37,48 @@ public class ProjectController {
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>("게시글을 등록하지 못했습니다.", HttpStatus.BAD_REQUEST);
         }
+        return responseEntity;
+    }
+
+    @PatchMapping(value="project")
+    public ResponseEntity<?> updateProjectPost(@RequestBody UpdateProjectDTO updateProjectDTO) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+            projectService.updateProjectPost(updateProjectDTO);
+            responseEntity = new ResponseEntity<>("게시글을 성공적으로 수정했습니다.", HttpStatus.OK);
+        }catch(Exception e) {
+            responseEntity = new ResponseEntity<>("게시글 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
+
+    @DeleteMapping(value="project/{id}")
+    public ResponseEntity<?> deleteProjectPost(@PathVariable Long id){
+        ResponseEntity<?> responseEntity;
+
+        try {
+            projectService.deleteProjectPost(id);
+            responseEntity = new ResponseEntity<>("게시글을 성공적으로 삭제했습니다.", HttpStatus.OK);
+        }catch(Exception e) {
+            responseEntity = new ResponseEntity<>("게시글 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
+
+    @GetMapping(value="project/{id}")
+    public ResponseEntity<?> detailProjectPost(@PathVariable Long id) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+
+            responseEntity = new ResponseEntity<>("게시글을 성공적으로 가져왔습니다.", HttpStatus.OK);
+        }catch(Exception e) {
+            responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
         return responseEntity;
     }
 }

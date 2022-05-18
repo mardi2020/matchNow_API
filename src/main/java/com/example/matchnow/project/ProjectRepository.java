@@ -15,7 +15,7 @@ public interface ProjectRepository {
 
     List<Project> findAll();
 
-    void changePostState(Long id); // 마감, 모집, 취소됨
+    void changePostState(Long id, int state); // 마감, 모집, 취소됨
 
     List<Project> detailProjectPost(Long id);
 }

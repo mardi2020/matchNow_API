@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -75,6 +76,20 @@ public class ProjectController {
         try {
             DetailedProjectDTO detailedProjectDTO = projectService.detailProjectPost(id);
             responseEntity = new ResponseEntity<>(detailedProjectDTO, HttpStatus.OK);
+        }catch(Exception e) {
+            responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
+
+    @PatchMapping(value="project/{id}")
+    public ResponseEntity<?> changePostState(@PathVariable Long id, @RequestBody Map<String, Integer> param) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+            projectService.changePostState(id, param.get("state"));
+            responseEntity = new ResponseEntity<>("성공적으로 수정하였습니다.", HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
         }

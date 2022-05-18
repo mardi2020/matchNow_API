@@ -57,7 +57,12 @@ public class JPAProjectRepository implements ProjectRepository{
     }
 
     @Override
-    public void changePostState(Long id) { }
+    public void changePostState(Long id, int state) {
+        em.createNativeQuery("UPDATE matchnow.projects SET state=? WHERE project_id=?")
+                .setParameter(1, state)
+                .setParameter(2, id)
+                .executeUpdate();
+    }
 
     @Override
     public List<Project> detailProjectPost(Long id) {

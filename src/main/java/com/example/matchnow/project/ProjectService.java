@@ -84,4 +84,9 @@ public class ProjectService {
             return detailedProjectDTO;
         }
     }
+
+    @Transactional
+    public void changePostState(Long id, int state) {
+        projectRepository.changePostState(id, state);
+    }
 }

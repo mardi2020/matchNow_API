@@ -2,6 +2,7 @@ package com.example.matchnow.project;
 
 
 import com.example.matchnow.user.User;
+import com.example.matchnow.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -16,24 +17,26 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
+    private final UserRepository userRepository;
+
     private final ModelMapper modelMapper;
 
     @Transactional
-    public void uploadProjectPost(UploadProjectDTO projectDTO) {
+    public String uploadProjectPost(UploadProjectDTO projectDTO, String email) {
         Project projectEntity = new Project();
-        User user = new User();
-        user.setUsername(projectDTO.getUser().getUsername());
-        user.setUserId(projectDTO.getUser().getUserId());
+        User userInfo = userRepository.findByEmail(email).get(0);
 
         projectEntity.setMainText(projectDTO.getMainText());
         projectEntity.setTitle(projectDTO.getTitle());
-        projectEntity.setWriter(user);
+        projectEntity.setWriter(userInfo);
         projectEntity.setInputImage(projectDTO.getImage());
         projectEntity.setWantCnt(projectDTO.getWantCnt());
         projectEntity.setNowPeopleCnt(1);
         projectEntity.setState(State.RECRUITING);
 
         projectRepository.uploadProjectPost(projectEntity);
+
+        return userInfo.getUsername();
     }
 
     public List<PostedProjectDTO> findAll() {
@@ -48,15 +51,12 @@ public class ProjectService {
     }
 
     @Transactional
-    public void updateProjectPost(UpdateProjectDTO updateProjectDTO) {
+    public void updateProjectPost(Long id, UpdateProjectDTO updateProjectDTO) {
         Project projectEntity = new Project();
-
-        projectEntity.setProjectId(updateProjectDTO.getProjectId());
+        projectEntity.setProjectId(id);
         projectEntity.setTitle(updateProjectDTO.getTitle());
         projectEntity.setMainText(updateProjectDTO.getMainText());
         projectEntity.setInputImage(updateProjectDTO.getImage());
-        projectEntity.setState(updateProjectDTO.getState());
-
         projectRepository.updateProjectPost(projectEntity);
     }
 

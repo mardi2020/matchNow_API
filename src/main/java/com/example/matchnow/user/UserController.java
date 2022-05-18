@@ -23,7 +23,7 @@ public class UserController {
 
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/register")
     public ResponseEntity<?> registerUserPOST(@RequestBody UserJoinDTO userJoinDTO) {
         ResponseEntity<String> responseEntity;
 

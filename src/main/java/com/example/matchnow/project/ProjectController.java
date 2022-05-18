@@ -3,8 +3,10 @@ package com.example.matchnow.project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +31,12 @@ public class ProjectController {
     }
 
     @PostMapping(value="project")
-    public ResponseEntity<?> uploadProjectPost(@RequestBody UploadProjectDTO uploadProjectDTO) {
+    public ResponseEntity<?> uploadProjectPost(@RequestBody UploadProjectDTO uploadProjectDTO, Principal principal) {
         ResponseEntity<?> responseEntity;
         try {
-            projectService.uploadProjectPost(uploadProjectDTO);
-            responseEntity = new ResponseEntity<>(uploadProjectDTO.getUser().getUsername() + "님의 "
+            String email = principal.getName();
+            String username = projectService.uploadProjectPost(uploadProjectDTO, email);
+            responseEntity = new ResponseEntity<>(username + "님의 "
                     + uploadProjectDTO.getTitle() + "글 등록 성공!", HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>("게시글을 등록하지 못했습니다.", HttpStatus.BAD_REQUEST);
@@ -41,12 +44,12 @@ public class ProjectController {
         return responseEntity;
     }
 
-    @PatchMapping(value="project")
-    public ResponseEntity<?> updateProjectPost(@RequestBody UpdateProjectDTO updateProjectDTO) {
+    @PatchMapping(value="project/{id}")
+    public ResponseEntity<?> updateProjectPost(@PathVariable Long id, @RequestBody UpdateProjectDTO updateProjectDTO) {
         ResponseEntity<?> responseEntity;
 
         try {
-            projectService.updateProjectPost(updateProjectDTO);
+            projectService.updateProjectPost(id, updateProjectDTO);
             responseEntity = new ResponseEntity<>("게시글을 성공적으로 수정했습니다.", HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>("게시글 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
@@ -83,7 +86,7 @@ public class ProjectController {
         return responseEntity;
     }
 
-    @PatchMapping(value="project/{id}")
+    @PatchMapping(value="project/state/{id}")
     public ResponseEntity<?> changePostState(@PathVariable Long id, @RequestBody Map<String, Integer> param) {
         ResponseEntity<?> responseEntity;
 

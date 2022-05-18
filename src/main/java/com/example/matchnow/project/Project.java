@@ -39,12 +39,9 @@ public class Project {
     private int wantCnt;
 
     @Column(name="now_cnt",
-            columnDefinition = "INT DEFAULT 1'"
+            columnDefinition = "INT DEFAULT 1"
     )
     private int nowPeopleCnt;
-
-    @ManyToMany
-    private List<User> userList = new ArrayList<>(); // 프로젝트에 포함된 유저들
 
     @Column(name="create_at", nullable = false,
             updatable = false, insertable = false,
@@ -61,16 +58,6 @@ public class Project {
     /* writer 설정 */
     public void setWriter(User user) {
         this.user = user;
-        user.getWrittenProjectList().add(this);
     }
 
-    /**
-     * 프로젝트에 참여한 유저 추가
-    * @param user 프로젝트에 신규 참여한 유저
-     */
-    public void addUser(User user) {
-        userList.add(user); // 현재 프로젝트 인원 정보에도 추가
-        nowPeopleCnt += 1; // 인원 증가
-        user.getJoinedProjectList().add(this); // 해당 유저의 projectList에도 프로젝트 추가
-    }
 }

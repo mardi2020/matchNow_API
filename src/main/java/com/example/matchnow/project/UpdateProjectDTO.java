@@ -9,10 +9,8 @@ import javax.validation.constraints.Size;
 @Data
 public class UpdateProjectDTO {
 
-    private Long projectId;
-
     @NotBlank(message="제목이 필요합니다.") // null, "", " " 허용하지 않음
-    @Size(min = 1, max = 15, message="제목의 길이는 1부터 10까지 허용합니다.")
+    @Size(min = 1, max = 15, message="제목의 길이는 1부터 15까지 허용합니다.")
     private String title;
 
     @NotNull(message = "본문이 비어있습니다.")
@@ -20,7 +18,4 @@ public class UpdateProjectDTO {
     private String mainText;
 
     private String image;
-
-    private State state;
-
 }

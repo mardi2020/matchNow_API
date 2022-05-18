@@ -19,13 +19,10 @@ public class UploadProjectDTO {
     @Size(min = 1)
     private String mainText;
 
-    private Writer user;
-
     private String image;
 
     private int wantCnt;
 
     private int nowPeopleCnt;
 
-    private List<Writer> userList;
 }

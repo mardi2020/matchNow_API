@@ -53,13 +53,6 @@ public class User {
     @OneToMany(mappedBy = "user") // user가 가진 스킬 스택
     private List<SkillStack> skillStackList = new ArrayList<>();
 
-    @ManyToMany // 참여한 프로젝트
-    private List<Project> joinedProjectList = new ArrayList<>();
-
-    // 현재 내가 쓴 글
-    @OneToMany(mappedBy = "user")
-    private List<Project> writtenProjectList = new ArrayList<>();
-
     // 내가 보낸 쪽지 목룍
     @OneToMany(mappedBy = "sender")
     private List<Message> sendMessageList = new ArrayList<>();

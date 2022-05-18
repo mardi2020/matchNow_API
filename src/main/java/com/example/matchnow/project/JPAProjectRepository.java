@@ -57,9 +57,7 @@ public class JPAProjectRepository implements ProjectRepository{
     }
 
     @Override
-    public void changePostState(Long id) {
-
-    }
+    public void changePostState(Long id) { }
 
     @Override
     public List<Project> detailProjectPost(Long id) {

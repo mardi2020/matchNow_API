@@ -5,6 +5,7 @@ import com.example.matchnow.project.Project;
 import com.example.matchnow.skillStack.SkillStack;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
 @Entity
 @Table(name="USERS")
 @Getter @Setter
+@ToString
 public class User {
 
     @Id
@@ -65,5 +67,4 @@ public class User {
     // 받은 쪽지 목록
     @OneToMany(mappedBy = "recevier")
     private List<Message> receivedMessageList = new ArrayList<>();
-
 }

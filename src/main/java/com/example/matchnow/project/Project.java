@@ -52,9 +52,8 @@ public class Project {
     )
     private Date createAt;
 
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "enum('RECRUITING', 'COMPLETED', 'CANCELED') DEFAULT 'RECRUITING'")
-    private State state;
+    @Enumerated(EnumType.ORDINAL)
+    private State state = State.RECRUITING;
 
     @OneToMany(mappedBy = "project")
     private List<Category> categoryList = new ArrayList<>();

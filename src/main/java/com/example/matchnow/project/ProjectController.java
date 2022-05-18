@@ -73,8 +73,8 @@ public class ProjectController {
         ResponseEntity<?> responseEntity;
 
         try {
-
-            responseEntity = new ResponseEntity<>("게시글을 성공적으로 가져왔습니다.", HttpStatus.OK);
+            DetailedProjectDTO detailedProjectDTO = projectService.detailProjectPost(id);
+            responseEntity = new ResponseEntity<>(detailedProjectDTO, HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
         }

@@ -64,4 +64,24 @@ public class ProjectService {
     public void deleteProjectPost(Long id) {
         projectRepository.deleteProjectPost(id);
     }
+
+
+    public DetailedProjectDTO detailProjectPost(Long id) {
+        List<Project> projectList = projectRepository.detailProjectPost(id);
+        if (projectList == null) {
+            throw new IllegalStateException("해당 페이지가 존재하지 않습니다.");
+        } else {
+            Project source = projectList.get(0);
+            DetailedProjectDTO detailedProjectDTO = new DetailedProjectDTO();
+            detailedProjectDTO.setProjectId(source.getProjectId());
+            detailedProjectDTO.setTitle(source.getTitle());
+            detailedProjectDTO.setMainText(source.getMainText());
+            detailedProjectDTO.setUser(source.getUser());
+            detailedProjectDTO.setInputImage(source.getInputImage());
+            detailedProjectDTO.setNowPeopleCnt(source.getNowPeopleCnt());
+            detailedProjectDTO.setWantCnt(source.getWantCnt());
+            detailedProjectDTO.setState(source.getState());
+            return detailedProjectDTO;
+        }
+    }
 }

@@ -1,6 +1,9 @@
 package com.example.matchnow.message;
 
 import com.example.matchnow.user.User;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -8,9 +11,8 @@ import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name="MESSAGES")
+@Setter @Getter
 public class Message {
-
-    private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Id
     @Column(name="message_id")
@@ -29,14 +31,16 @@ public class Message {
     @ManyToOne(fetch = FetchType.LAZY)
     private User recevier;
 
-    @Column(nullable = false, name="send_date")
-    private String sendDate;
+    @Column(nullable = false, name="send_date",
+            insertable = false, updatable = false,
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    )
+    private Date sendDate;
 
     public void setSenderAndRecevier(User send, User to){
         sender = send;
         send.getSendMessageList().add(this);
         recevier = to;
         to.getReceivedMessageList().add(this);
-        sendDate = format.format(System.currentTimeMillis());
     }
 }

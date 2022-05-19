@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 @Entity
 @Table(name="USERS")
 @Getter @Setter
-@ToString
 public class User {
 
     @Id

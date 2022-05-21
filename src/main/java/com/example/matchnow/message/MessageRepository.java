@@ -8,4 +8,8 @@ public interface MessageRepository {
 
     void sendMessage(Message message);
 
+    void deleteMessage(Long messageId);
+
+    void deleteMessageAll(Long userId);
+
 }

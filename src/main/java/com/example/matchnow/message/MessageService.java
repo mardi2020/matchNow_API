@@ -37,8 +37,6 @@ public class MessageService {
     public List<ReceivedMessageDTO> findAll(String email) {
         List<Message> messages = messageRepository.findAll(email);
 
-        System.out.println("messages = " + messages);
-
         List<ReceivedMessageDTO> receivedMessageDTOList = new ArrayList<>();
         for (Message message : messages) {
             ReceivedMessageDTO receivedMessageDTO = new ReceivedMessageDTO();
@@ -50,5 +48,16 @@ public class MessageService {
             receivedMessageDTOList.add(receivedMessageDTO);
         }
         return receivedMessageDTOList;
+    }
+
+    @Transactional
+    public void deleteMessageAll(String email){
+        Long userId = userRepository.findByEmail(email).get(0).getUserId();
+        messageRepository.deleteMessageAll(userId);
+    }
+
+    @Transactional
+    public void deleteMessage(Long messageId) {
+        messageRepository.deleteMessage(messageId);
     }
 }

@@ -42,4 +42,33 @@ public class MessageController {
         }
         return responseEntity;
     }
+
+    @DeleteMapping(value="/message/{id}")
+    public ResponseEntity<?> deleteMessage(@PathVariable Long id) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+            messageService.deleteMessage(id);
+            responseEntity = new ResponseEntity<>("메시지를 삭제했습니다.", HttpStatus.OK);
+        }catch (Exception e) {
+            responseEntity = new ResponseEntity<>("메시지 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
+
+    @DeleteMapping(value="/message")
+    public ResponseEntity<?> deleteMessageAll(Principal principal) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+            String email = principal.getName();
+            messageService.deleteMessageAll(email);
+            responseEntity = new ResponseEntity<>("모든 메시지를 삭제했습니다.", HttpStatus.OK);
+        }catch (Exception e) {
+            responseEntity = new ResponseEntity<>("메시지 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return responseEntity;
+    }
 }

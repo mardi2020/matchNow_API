@@ -3,6 +3,8 @@ package com.example.matchnow.user;
 import com.example.matchnow.message.Message;
 import com.example.matchnow.project.Project;
 import com.example.matchnow.skillStack.SkillStack;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

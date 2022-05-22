@@ -5,9 +5,11 @@ import java.util.Optional;
 
 public interface StackRepository {
 
-    Optional<SkillStack> findById(long id);
+    List<SkillStack> findById(long id);
 
-    List<SkillStack> findAll();
+    List<SkillStack> findAll(String email);
 
-    Optional<SkillStack> findByName(String name);
+    List<SkillStack> findByName(String name);
+
+    void addMySkill(String stackName, Long userId);
 }

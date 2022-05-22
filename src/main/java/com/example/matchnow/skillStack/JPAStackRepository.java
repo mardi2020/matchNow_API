@@ -42,4 +42,12 @@ public class JPAStackRepository implements StackRepository {
                 .executeUpdate();
 
     }
+
+    @Override
+    public void deleteMySkill(Long stackId, Long userId) {
+        em.createNativeQuery("DELETE FROM matchnow.skill_stacks WHERE skill_stacks.skill_stack_id=? and skill_stacks.user_skill_id=?")
+                .setParameter(1, stackId)
+                .setParameter(2, userId)
+                .executeUpdate();
+    }
 }

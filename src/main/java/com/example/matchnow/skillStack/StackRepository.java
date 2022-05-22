@@ -12,4 +12,6 @@ public interface StackRepository {
     List<SkillStack> findByName(String name);
 
     void addMySkill(String stackName, Long userId);
+
+    void deleteMySkill(Long stackId, Long userId);
 }

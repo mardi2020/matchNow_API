@@ -23,5 +23,13 @@ public class StackService {
             stackRepository.addMySkill(skillStack.getStackName(), user);
         }
     }
+
+    @Transactional
+    public void deleteMySkill(List<DeleteSkillStackDTO> skillStackDTOList, String email) {
+        Long user = userRepository.findByEmail(email).get(0).getUserId();
+        for (DeleteSkillStackDTO deleteSkillStackDTO : skillStackDTOList) {
+            stackRepository.deleteMySkill(deleteSkillStackDTO.getSkillStackId(), user);
+        }
+    }
 }
 

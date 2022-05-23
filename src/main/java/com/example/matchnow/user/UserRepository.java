@@ -14,4 +14,6 @@ public interface UserRepository {
     List<User> findAll();
 
     List<User> findByEmail(String email);
+
+    void updateLoginDate(String email, String date);
 }

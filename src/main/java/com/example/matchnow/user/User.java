@@ -44,12 +44,12 @@ public class User {
 
     @Column(name="last_login_at", nullable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date LastLoginAt;
+    private String LastLoginAt;
 
     @Column(name="create_at",nullable = false,
             updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date createAt;
+    private String createAt;
 
     @OneToMany(mappedBy = "user") // user가 가진 스킬 스택
     private List<SkillStack> skillStackList = new ArrayList<>();

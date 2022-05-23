@@ -1,7 +1,6 @@
 package com.example.matchnow.message;
 
-import com.example.matchnow.user.User;
-import com.example.matchnow.user.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,11 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping(value = "/message")
-    public ResponseEntity<?> sendMessage(@RequestBody SendMessageDTO sendMessageDTO) {
+    public ResponseEntity<?> sendMessage(@RequestBody SendMessageDTO sendMessageDTO, Principal principal) {
         ResponseEntity<?> responseEntity;
 
         try {
-            List<String> sendTo = messageService.sendMessage(sendMessageDTO);
+            List<String> sendTo = messageService.sendMessage(sendMessageDTO, principal.getName());
             responseEntity = new ResponseEntity<>(sendTo.get(0) + "님의 메세지가 " + sendTo.get(1) + "님께 전송 완료!", HttpStatus.OK);
         }catch (Exception e) {
             responseEntity = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);

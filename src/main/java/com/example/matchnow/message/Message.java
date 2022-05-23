@@ -35,7 +35,7 @@ public class Message {
             insertable = false, updatable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
-    private Date sendDate;
+    private String sendDate;
 
     public void setSenderAndRecevier(User send, User to){
         sender = send;

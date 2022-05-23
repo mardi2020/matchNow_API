@@ -15,5 +15,5 @@ public class ReceivedMessageDTO {
 
     private String sender;
 
-    private Date sendDate;
+    private String sendDate;
 }

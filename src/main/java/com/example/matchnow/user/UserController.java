@@ -41,15 +41,22 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> loginUserPOST(@RequestBody UserLoginDTO userLoginDTO, HttpSession session) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                userLoginDTO.getEmail(), userLoginDTO.getPassword()
-        ));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-                SecurityContextHolder.getContext());
+        try {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    userLoginDTO.getEmail(), userLoginDTO.getPassword()
+            ));
 
-        return new ResponseEntity<>("로그인 성공!", HttpStatus.OK);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                    SecurityContextHolder.getContext());
+
+            userService.updateLoginDate(userLoginDTO.getEmail());
+            return new ResponseEntity<>("로그인 성공!", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>("[로그인 오류]: " + e , HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(value = "/me")

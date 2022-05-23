@@ -39,4 +39,12 @@ public class JPAUserRepositoryImpl implements UserRepository{
                 .setParameter("email", email)
                 .getResultList();
     }
+
+    @Override
+    public void updateLoginDate(String email, String date) {
+        em.createNativeQuery("UPDATE matchnow.users SET matchnow.users.last_login_at=? WHERE matchnow.users.email=?")
+                .setParameter(1, date)
+                .setParameter(2, email)
+                .executeUpdate();
+    }
 }

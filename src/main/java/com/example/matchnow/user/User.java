@@ -1,9 +1,12 @@
 package com.example.matchnow.user;
 
+import com.example.matchnow.comment.Comment;
 import com.example.matchnow.message.Message;
 import com.example.matchnow.project.Project;
 import com.example.matchnow.skillStack.SkillStack;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +34,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -56,9 +60,15 @@ public class User {
 
     // 내가 보낸 쪽지 목룍
     @OneToMany(mappedBy = "sender")
+    @JsonBackReference
     private List<Message> sendMessageList = new ArrayList<>();
 
     // 받은 쪽지 목록
     @OneToMany(mappedBy = "recevier")
+    @JsonBackReference
     private List<Message> receivedMessageList = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name="comment_id")
+    private List<Comment> comments;
 }

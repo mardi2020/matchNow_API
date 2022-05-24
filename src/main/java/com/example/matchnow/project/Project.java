@@ -1,7 +1,9 @@
 package com.example.matchnow.project;
 
 import com.example.matchnow.category.Category;
+import com.example.matchnow.comment.Comment;
 import com.example.matchnow.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -54,6 +56,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<Category> categoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project")
+    private List<Comment> comments = new ArrayList<>();
 
     /* writer 설정 */
     public void setWriter(User user) {

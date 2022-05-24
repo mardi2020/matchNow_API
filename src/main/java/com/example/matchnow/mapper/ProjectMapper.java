@@ -6,6 +6,7 @@ import org.modelmapper.PropertyMap;
 
 public class ProjectMapper extends PropertyMap<Project, PostedProjectDTO> {
     protected void configure() {
+        map().setProjectId(source.getProjectId());
         map().setState(source.getState());
         map().setWriter(source.getUser().getUsername());
         map().setCreateAt(source.getCreateAt());

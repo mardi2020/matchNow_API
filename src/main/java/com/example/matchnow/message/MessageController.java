@@ -23,7 +23,7 @@ public class MessageController {
             List<String> sendTo = messageService.sendMessage(sendMessageDTO, principal.getName());
             responseEntity = new ResponseEntity<>(sendTo.get(0) + "님의 메세지가 " + sendTo.get(1) + "님께 전송 완료!", HttpStatus.OK);
         }catch (Exception e) {
-            responseEntity = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e + "메세지 전송 실패", HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }

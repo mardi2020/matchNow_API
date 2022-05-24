@@ -9,6 +9,8 @@ import java.util.Date;
 @Data
 public class PostedProjectDTO {
 
+    private Long projectId;
+
     private String title;
 
     private Date createAt;

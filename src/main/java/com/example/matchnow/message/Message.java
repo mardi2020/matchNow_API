@@ -37,6 +37,10 @@ public class Message {
     )
     private String sendDate;
 
+    private boolean recevierDelete;
+
+    private boolean senderDelete;
+
     public void setSenderAndRecevier(User send, User to){
         sender = send;
         send.getSendMessageList().add(this);

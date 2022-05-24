@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface MessageRepository {
 
-    List<Message> findAll(String email);
+    List<Message> findAllRecv(String email);
 
     void sendMessage(Message message);
 
@@ -12,4 +12,5 @@ public interface MessageRepository {
 
     void deleteMessageAll(Long userId);
 
+    List<Message> findAllSend(String email);
 }

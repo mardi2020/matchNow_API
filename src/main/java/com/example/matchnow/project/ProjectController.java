@@ -38,7 +38,7 @@ public class ProjectController {
             responseEntity = new ResponseEntity<>(username + "님의 "
                     + uploadProjectDTO.getTitle() + "글 등록 성공!", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글을 등록하지 못했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e + "게시글을 등록하지 못했습니다.", HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }

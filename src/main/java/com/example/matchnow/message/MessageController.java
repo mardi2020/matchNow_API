@@ -28,13 +28,27 @@ public class MessageController {
         return responseEntity;
     }
 
-    @GetMapping(value="/message")
-    public ResponseEntity<?> findAll(Principal principal) {
+    @GetMapping(value="/message/recv")
+    public ResponseEntity<?> findAllRecv(Principal principal) {
         ResponseEntity<?> responseEntity;
 
         try {
             String email = principal.getName();
-            List<ReceivedMessageDTO> messages = messageService.findAll(email);
+            List<ReceivedMessageDTO> messages = messageService.findAllRecv(email);
+            responseEntity = new ResponseEntity<>(messages, HttpStatus.OK);
+        }catch (Exception e) {
+            responseEntity = new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
+    }
+
+    @GetMapping(value="/message/send")
+    public ResponseEntity<?> findAllSend(Principal principal) {
+        ResponseEntity<?> responseEntity;
+
+        try {
+            String email = principal.getName();
+            List<SendMessageDTO> messages = messageService.findAllSend(email);
             responseEntity = new ResponseEntity<>(messages, HttpStatus.OK);
         }catch (Exception e) {
             responseEntity = new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);

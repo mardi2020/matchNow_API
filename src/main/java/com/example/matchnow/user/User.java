@@ -69,6 +69,6 @@ public class User {
     private List<Message> receivedMessageList = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name="comment_id")
-    private List<Comment> comments;
+    @JoinColumn(name="comment_user_id")
+    private List<Comment> comments = new ArrayList<>();
 }

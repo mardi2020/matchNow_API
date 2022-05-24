@@ -34,8 +34,8 @@ public class MessageService {
         return Arrays.asList(from.getUsername(), to.getUsername());
     }
 
-    public List<ReceivedMessageDTO> findAll(String email) {
-        List<Message> messages = messageRepository.findAll(email);
+    public List<ReceivedMessageDTO> findAllRecv(String email) {
+        List<Message> messages = messageRepository.findAllRecv(email);
 
         List<ReceivedMessageDTO> receivedMessageDTOList = new ArrayList<>();
         for (Message message : messages) {
@@ -48,6 +48,24 @@ public class MessageService {
             receivedMessageDTOList.add(receivedMessageDTO);
         }
         return receivedMessageDTOList;
+    }
+
+    public List<SendMessageDTO> findAllSend(String email) {
+        List<Message> messages = messageRepository.findAllSend(email);
+
+        List<SendMessageDTO> sendList = new ArrayList<>();
+        for (Message message : messages) {
+            System.out.println("message = " + message.getTitle());
+            SendMessageDTO sendMessageDTO = new SendMessageDTO();
+
+            sendMessageDTO.setSender(message.getSender().getUsername());
+            sendMessageDTO.setReceiver(message.getRecevier().getUsername());
+            sendMessageDTO.setTitle(message.getTitle());
+            sendMessageDTO.setMainText(message.getMainText());
+            sendMessageDTO.setDate(message.getSendDate());
+            sendList.add(sendMessageDTO);
+        }
+        return sendList;
     }
 
     @Transactional

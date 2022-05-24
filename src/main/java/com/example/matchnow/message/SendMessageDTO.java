@@ -13,4 +13,6 @@ public class SendMessageDTO {
     private String title;
 
     private String mainText;
+
+    private String date;
 }

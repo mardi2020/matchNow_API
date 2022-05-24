@@ -7,6 +7,6 @@ public class PostCommentDTO {
 
     private String text;
 
-    private Long ProjectId;
+    private Long projectId;
 
 }

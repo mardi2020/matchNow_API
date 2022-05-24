@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,19 +15,18 @@ public class JPAMessageRepository implements MessageRepository {
     private final EntityManager em;
 
     @Override
-    public List<Message> findAll(String email) {
-        List<Message> receviedMessages = em.createQuery("SELECT message FROM Message message WHERE message.recevier.email=:email or message.sender.email=:email", Message.class)
-                .setParameter("email", email)
+    public List<Message> findAllRecv(String email) {
+
+        return em.createQuery("SELECT message FROM Message message WHERE message.recevier.email=:email", Message.class)
                 .setParameter("email", email)
                 .getResultList();
+    }
 
-//        List<Message> sendMessages = em.createQuery("SELECT message FROM Message message WHERE message.sender.email=:email", Message.class)
-//                .setParameter("email", email)
-//                .getResultList();
-//
-//        return Stream.concat(receviedMessages.stream(), sendMessages.stream())
-//                .collect(Collectors.toList());
-        return receviedMessages;
+    @Override
+    public List<Message> findAllSend(String email){
+        return em.createQuery("SELECT message FROM Message message WHERE message.sender.email=:email", Message.class)
+                .setParameter("email", email)
+                .getResultList();
     }
 
     @Override

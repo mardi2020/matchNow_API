@@ -1,24 +1,20 @@
 package com.example.matchnow.project;
 
+import com.example.matchnow.BaseTimeEntity;
 import com.example.matchnow.category.Category;
 import com.example.matchnow.comment.Comment;
 import com.example.matchnow.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="PROJECTS")
-@Setter @Getter
-@ToString
-public class Project {
+@Getter
+@AllArgsConstructor
+@Builder
+public class Project extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="project_id")
@@ -45,24 +41,14 @@ public class Project {
     )
     private int nowPeopleCnt;
 
-    @Column(name="create_at", nullable = false,
-            updatable = false, insertable = false,
-            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-    )
-    private Date createAt;
-
     @Enumerated(EnumType.ORDINAL)
-    private State state = State.RECRUITING;
+    private State state;
 
     @OneToMany(mappedBy = "project")
-    private List<Category> categoryList = new ArrayList<>();
+    private List<Category> categoryList;
 
     @OneToMany(mappedBy = "project")
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
-    /* writer 설정 */
-    public void setWriter(User user) {
-        this.user = user;
-    }
-
+    public Project() {}
 }

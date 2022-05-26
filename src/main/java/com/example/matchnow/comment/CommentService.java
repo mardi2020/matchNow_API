@@ -22,13 +22,7 @@ public class CommentService {
         List<ResponseCommentDTO> responseCommentDTOS = new ArrayList<>();
 
         for (Comment comment : comments) {
-            ResponseCommentDTO responseCommentDTO = new ResponseCommentDTO();
-            responseCommentDTO.setCommentId(comment.getCommentId());
-            responseCommentDTO.setDate(comment.getDate());
-            responseCommentDTO.setProject(comment.getProject());
-            responseCommentDTO.setText(comment.getText());
-            responseCommentDTO.setUser(comment.getUser());
-            responseCommentDTOS.add(responseCommentDTO);
+            responseCommentDTOS.add(new ResponseCommentDTO(comment));
         }
         return responseCommentDTOS;
     }

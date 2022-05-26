@@ -1,12 +1,11 @@
 package com.example.matchnow.project;
 
-import com.example.matchnow.user.Writer;
+import com.example.matchnow.user.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Data
 public class UploadProjectDTO {
@@ -25,4 +24,15 @@ public class UploadProjectDTO {
 
     private int nowPeopleCnt;
 
+    public Project toEntity(User user) {
+        return Project.builder()
+                .mainText(mainText)
+                .title(title)
+                .inputImage(image)
+                .wantCnt(wantCnt)
+                .nowPeopleCnt(nowPeopleCnt)
+                .user(user)
+                .state(State.RECRUITING)
+                .build();
+    }
 }

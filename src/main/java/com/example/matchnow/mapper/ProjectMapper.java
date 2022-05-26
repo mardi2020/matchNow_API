@@ -9,7 +9,7 @@ public class ProjectMapper extends PropertyMap<Project, PostedProjectDTO> {
         map().setProjectId(source.getProjectId());
         map().setState(source.getState());
         map().setWriter(source.getUser().getUsername());
-        map().setCreateAt(source.getCreateAt());
+        map().setCreateAt(source.getCreatedDate());
         map().setTitle(source.getTitle());
     }
 }

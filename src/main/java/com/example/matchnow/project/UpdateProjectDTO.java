@@ -18,4 +18,13 @@ public class UpdateProjectDTO {
     private String mainText;
 
     private String image;
+
+    public Project toEntity(Long id) {
+        return Project.builder()
+                .projectId(id)
+                .title(title)
+                .mainText(mainText)
+                .inputImage(image)
+                .build();
+    }
 }

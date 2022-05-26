@@ -31,4 +31,15 @@ public class DetailedProjectDTO {
     public void setUser(User source){
         writer = source.getUsername();
     }
+
+    public DetailedProjectDTO(Project entity) {
+        this.projectId = entity.getProjectId();
+        this.title = entity.getTitle();
+        this.mainText = entity.getMainText();
+        this.writer = entity.getUser().getUsername();
+        this.inputImage = entity.getInputImage();
+        this.wantCnt = entity.getWantCnt();
+        this.nowPeopleCnt = entity.getNowPeopleCnt();
+        this.state = entity.getState();
+    }
 }

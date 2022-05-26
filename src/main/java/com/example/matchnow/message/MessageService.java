@@ -21,15 +21,10 @@ public class MessageService {
 
     @Transactional
     public List<String> sendMessage(SendMessageDTO sendMessageDTO, String myEmail) {
-        Message message = new Message();
         User from = userRepository.findByEmail(myEmail).get(0);
         User to = userRepository.findByEmail(sendMessageDTO.getReceiver()).get(0);
 
-        message.setSenderAndRecevier(from, to);
-        message.setMainText(sendMessageDTO.getMainText());
-        message.setTitle(sendMessageDTO.getTitle());
-
-        messageRepository.sendMessage(message);
+        messageRepository.sendMessage(sendMessageDTO.toEntity(from, to));
 
         return Arrays.asList(from.getUsername(), to.getUsername());
     }
@@ -39,13 +34,7 @@ public class MessageService {
 
         List<ReceivedMessageDTO> receivedMessageDTOList = new ArrayList<>();
         for (Message message : messages) {
-            ReceivedMessageDTO receivedMessageDTO = new ReceivedMessageDTO();
-            receivedMessageDTO.setMessageId(message.getMessageId());
-            receivedMessageDTO.setTitle(message.getTitle());
-            receivedMessageDTO.setMainText(message.getMainText());
-            receivedMessageDTO.setSender(message.getSender().getUsername());
-            receivedMessageDTO.setSendDate(message.getSendDate());
-            receivedMessageDTOList.add(receivedMessageDTO);
+            receivedMessageDTOList.add(new ReceivedMessageDTO(message));
         }
         return receivedMessageDTOList;
     }
@@ -55,15 +44,7 @@ public class MessageService {
 
         List<SendMessageDTO> sendList = new ArrayList<>();
         for (Message message : messages) {
-            System.out.println("message = " + message.getTitle());
-            SendMessageDTO sendMessageDTO = new SendMessageDTO();
-
-            sendMessageDTO.setSender(message.getSender().getUsername());
-            sendMessageDTO.setReceiver(message.getRecevier().getUsername());
-            sendMessageDTO.setTitle(message.getTitle());
-            sendMessageDTO.setMainText(message.getMainText());
-            sendMessageDTO.setDate(message.getSendDate());
-            sendList.add(sendMessageDTO);
+            sendList.add(new SendMessageDTO(message));
         }
         return sendList;
     }

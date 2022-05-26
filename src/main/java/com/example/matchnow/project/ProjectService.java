@@ -19,22 +19,11 @@ public class ProjectService {
 
     private final UserRepository userRepository;
 
-    private final ModelMapper modelMapper;
-
     @Transactional
     public String uploadProjectPost(UploadProjectDTO projectDTO, String email) {
-        Project projectEntity = new Project();
         User userInfo = userRepository.findByEmail(email).get(0);
 
-        projectEntity.setMainText(projectDTO.getMainText());
-        projectEntity.setTitle(projectDTO.getTitle());
-        projectEntity.setWriter(userInfo);
-        projectEntity.setInputImage(projectDTO.getImage());
-        projectEntity.setWantCnt(projectDTO.getWantCnt());
-        projectEntity.setNowPeopleCnt(1);
-        projectEntity.setState(State.RECRUITING);
-
-        projectRepository.uploadProjectPost(projectEntity);
+        projectRepository.uploadProjectPost(projectDTO.toEntity(userInfo));
 
         return userInfo.getUsername();
     }
@@ -44,7 +33,8 @@ public class ProjectService {
 
         List<PostedProjectDTO> postedProjectDTO = new ArrayList<>();
         for (Project project : projectList) {
-            postedProjectDTO.add(modelMapper.map(project, PostedProjectDTO.class));
+//            postedProjectDTO.add(modelMapper.map(project, PostedProjectDTO.class));
+            postedProjectDTO.add(new PostedProjectDTO(project));
         }
 
         return postedProjectDTO;
@@ -52,12 +42,7 @@ public class ProjectService {
 
     @Transactional
     public void updateProjectPost(Long id, UpdateProjectDTO updateProjectDTO) {
-        Project projectEntity = new Project();
-        projectEntity.setProjectId(id);
-        projectEntity.setTitle(updateProjectDTO.getTitle());
-        projectEntity.setMainText(updateProjectDTO.getMainText());
-        projectEntity.setInputImage(updateProjectDTO.getImage());
-        projectRepository.updateProjectPost(projectEntity);
+        projectRepository.updateProjectPost(updateProjectDTO.toEntity(id));
     }
 
     @Transactional
@@ -72,16 +57,7 @@ public class ProjectService {
             throw new IllegalStateException("해당 페이지가 존재하지 않습니다.");
         } else {
             Project source = projectList.get(0);
-            DetailedProjectDTO detailedProjectDTO = new DetailedProjectDTO();
-            detailedProjectDTO.setProjectId(source.getProjectId());
-            detailedProjectDTO.setTitle(source.getTitle());
-            detailedProjectDTO.setMainText(source.getMainText());
-            detailedProjectDTO.setUser(source.getUser());
-            detailedProjectDTO.setInputImage(source.getInputImage());
-            detailedProjectDTO.setNowPeopleCnt(source.getNowPeopleCnt());
-            detailedProjectDTO.setWantCnt(source.getWantCnt());
-            detailedProjectDTO.setState(source.getState());
-            return detailedProjectDTO;
+            return new DetailedProjectDTO(source);
         }
     }
 

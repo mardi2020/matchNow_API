@@ -16,4 +16,12 @@ public class ReceivedMessageDTO {
     private String sender;
 
     private String sendDate;
+
+    public ReceivedMessageDTO(Message entity) {
+        this.messageId = entity.getMessageId();
+        this.title = entity.getTitle();
+        this.mainText = entity.getMainText();
+        this.sender = entity.getSender().getUsername();
+        this.sendDate = entity.getSendDate();
+    }
 }

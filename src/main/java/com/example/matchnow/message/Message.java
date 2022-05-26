@@ -1,9 +1,9 @@
 package com.example.matchnow.message;
 
 import com.example.matchnow.user.User;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,8 +11,11 @@ import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name="MESSAGES")
-@Setter @Getter
+@Getter @Builder
+@AllArgsConstructor
 public class Message {
+
+    public Message() {}
 
     @Id
     @Column(name="message_id")
@@ -25,9 +28,17 @@ public class Message {
     @Column(name="main_text", nullable = false)
     private String mainText;
 
+    @JsonIgnoreProperties({"email", "githubLink", "blogLink", "job",
+            "lastLoginAt", "createdDate", "modifiedDate", "skillStackList",
+            "comments", "hibernateLazyInitializer", "sendMessageList", "receivedMessageList"
+    })
     @ManyToOne(fetch = FetchType.LAZY)
     private User sender;
 
+    @JsonIgnoreProperties({"email", "githubLink", "blogLink", "job",
+            "lastLoginAt", "createdDate", "modifiedDate", "skillStackList",
+            "comments", "hibernateLazyInitializer", "sendMessageList", "receivedMessageList"
+    })
     @ManyToOne(fetch = FetchType.LAZY)
     private User recevier;
 
@@ -37,14 +48,9 @@ public class Message {
     )
     private String sendDate;
 
+    @JsonBackReference
     private boolean recevierDelete;
 
+    @JsonBackReference
     private boolean senderDelete;
-
-    public void setSenderAndRecevier(User send, User to){
-        sender = send;
-        send.getSendMessageList().add(this);
-        recevier = to;
-        to.getReceivedMessageList().add(this);
-    }
 }

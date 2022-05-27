@@ -1,25 +1,21 @@
 package com.example.matchnow.user;
 
-import com.example.matchnow.BaseTimeEntity;
+import com.example.matchnow.BaseTime;
 import com.example.matchnow.comment.Comment;
 import com.example.matchnow.message.Message;
-import com.example.matchnow.project.Project;
 import com.example.matchnow.skillStack.SkillStack;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Entity
 @Table(name="USERS")
 @NoArgsConstructor
 @Getter
-public class User extends BaseTimeEntity {
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

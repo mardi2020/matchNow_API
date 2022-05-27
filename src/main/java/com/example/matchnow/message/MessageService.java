@@ -24,7 +24,7 @@ public class MessageService {
         User from = userRepository.findByEmail(myEmail).get(0);
         User to = userRepository.findByEmail(sendMessageDTO.getReceiver()).get(0);
 
-        messageRepository.sendMessage(sendMessageDTO.toEntity(from, to));
+        messageRepository.save(sendMessageDTO.toEntity(from, to));
 
         return Arrays.asList(from.getUsername(), to.getUsername());
     }
@@ -47,12 +47,6 @@ public class MessageService {
             sendList.add(new SendMessageDTO(message));
         }
         return sendList;
-    }
-
-    @Transactional
-    public void deleteMessageAll(String email){
-        Long userId = userRepository.findByEmail(email).get(0).getUserId();
-        messageRepository.deleteMessageAll(userId);
     }
 
     @Transactional

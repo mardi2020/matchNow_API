@@ -17,21 +17,22 @@ public class ResponseCommentDTO {
 
     @JsonIgnoreProperties({
             "title", "user", "mainText", "inputImage", "wantCnt",
-            "nowPeopleCnt", "createAt", "state", "categoryList",
-            "comments", "hibernateLazyInitializer"
+            "nowPeopleCnt", "modifiedDate", "createdDate", "state", "categoryList",
+            "comments", "hibernateLazyInitializer", "deleted"
     })
     private Project project;
 
-    private LocalDateTime date;
+    private LocalDateTime createAt;
 
-    @JsonIgnoreProperties({"email", "githubLink", "blogLink", "job",
-            "lastLoginAt", "createAt", "skillStackList", "comments", "hibernateLazyInitializer"
+    @JsonIgnoreProperties({"email", "githubLink", "blogLink", "job", "userId",
+            "modifiedDate", "createdDate", "skillStackList", "comments", "hibernateLazyInitializer",
+            "sendMessageList", "receivedMessageList"
     })
     private User user;
 
     public ResponseCommentDTO(Comment entity) {
         this.commentId = entity.getCommentId();
-        this.date = entity.getCreatedDate();
+        this.createAt = entity.getCreatedDate();
         this.project = entity.getProject();
         this.text = entity.getText();
         this.user = entity.getUser();

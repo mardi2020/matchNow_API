@@ -33,11 +33,11 @@ public class StackController {
     }
 
     @DeleteMapping(value="/skill")
-    public ResponseEntity<?> deleteMySkills(@RequestBody List<DeleteSkillStackDTO> deleteDtoList, Principal principal) {
+    public ResponseEntity<?> deleteMySkills(@RequestBody List<DeleteSkillStackDTO> deleteDtoList) {
         ResponseEntity<?> responseEntity;
 
         try {
-            stackService.deleteMySkill(deleteDtoList, principal.getName());
+            stackService.deleteMySkill(deleteDtoList);
             responseEntity = new ResponseEntity<>("해당 기술을 성공적으로 삭제했습니다.", HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<>(e + "오류로 인하여 삭제하지 못했습니다.", HttpStatus.BAD_REQUEST);

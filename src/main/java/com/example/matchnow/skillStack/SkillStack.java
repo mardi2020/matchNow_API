@@ -2,15 +2,21 @@ package com.example.matchnow.skillStack;
 
 import com.example.matchnow.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="SKILL_STACKS")
-@Getter @Setter
+@Getter
+@Builder
+@AllArgsConstructor
 public class SkillStack {
+
+    public SkillStack() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="skill_stack_id")

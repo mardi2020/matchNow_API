@@ -1,5 +1,6 @@
 package com.example.matchnow.project;
 
+import com.example.matchnow.user.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -19,9 +20,10 @@ public class UpdateProjectDTO {
 
     private String image;
 
-    public Project toEntity(Long id) {
+    public Project toEntity(Long id, User user) {
         return Project.builder()
                 .projectId(id)
+                .user(user)
                 .title(title)
                 .mainText(mainText)
                 .inputImage(image)

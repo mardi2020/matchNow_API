@@ -5,11 +5,11 @@ import com.example.matchnow.user.User;
 import com.example.matchnow.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class ProjectService {
     public String uploadProjectPost(UploadProjectDTO projectDTO, String email) {
         User userInfo = userRepository.findByEmail(email).get(0);
 
-        projectRepository.uploadProjectPost(projectDTO.toEntity(userInfo));
+        projectRepository.save(projectDTO.toEntity(userInfo));
 
         return userInfo.getUsername();
     }
@@ -33,7 +33,6 @@ public class ProjectService {
 
         List<PostedProjectDTO> postedProjectDTO = new ArrayList<>();
         for (Project project : projectList) {
-//            postedProjectDTO.add(modelMapper.map(project, PostedProjectDTO.class));
             postedProjectDTO.add(new PostedProjectDTO(project));
         }
 
@@ -42,7 +41,17 @@ public class ProjectService {
 
     @Transactional
     public void updateProjectPost(Long id, UpdateProjectDTO updateProjectDTO) {
-        projectRepository.updateProjectPost(updateProjectDTO.toEntity(id));
+        Project entity = projectRepository.findById(id).orElse(null);
+
+        if(entity == null)
+            throw new NoSuchElementException("해당 게시글이 존재하지 않습니다.");
+
+        entity.setUpdateProject(updateProjectDTO.getTitle(),
+                updateProjectDTO.getMainText(),
+                updateProjectDTO.getImage());
+
+        projectRepository.save(entity);
+
     }
 
     @Transactional

@@ -2,9 +2,11 @@ package com.example.matchnow.message;
 
 import com.example.matchnow.user.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@NoArgsConstructor
 public class SendMessageDTO {
 
     private String sender;
@@ -17,17 +19,17 @@ public class SendMessageDTO {
 
     private String date;
 
-    public Message toEntity(User sender, User recevier) {
+    public Message toEntity(User sender, User receiver) {
         Message entity = Message.builder()
                 .sender(sender)
-                .recevier(recevier)
+                .recevier(receiver)
                 .title(title)
                 .mainText(mainText)
                 .sendDate(date)
                 .build();
 
         sender.getSendMessageList().add(entity);
-        recevier.getReceivedMessageList().add(entity);
+        receiver.getReceivedMessageList().add(entity);
 
         return entity;
     }

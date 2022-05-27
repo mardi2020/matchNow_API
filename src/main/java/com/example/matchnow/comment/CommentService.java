@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class CommentService {
     private final UserRepository userRepository;
 
     public List<ResponseCommentDTO> findAllComment(Long ProjectId) {
-        List<Comment> comments = commentRepository.findAll(ProjectId);
+        List<Comment> comments = commentRepository.findAllByProject(ProjectId);
 
         List<ResponseCommentDTO> responseCommentDTOS = new ArrayList<>();
 
@@ -30,11 +31,16 @@ public class CommentService {
     @Transactional
     public void postComment(PostCommentDTO postCommentDTO, String email) {
         Long userId = userRepository.findByEmail(email).get(0).getUserId();
-        commentRepository.postComment(postCommentDTO.getText(), postCommentDTO.getProjectId(), userId);
+        commentRepository.saveIn(
+                postCommentDTO.getText(),
+                postCommentDTO.getProjectId(),
+                userId,
+                LocalDateTime.now());
     }
 
     @Transactional
     public void deleteComment(Long commentId) {
-        commentRepository.deleteComment(commentId);
+        Comment comment = commentRepository.findById(commentId).get();
+        commentRepository.delete(comment);
     }
 }

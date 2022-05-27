@@ -65,7 +65,7 @@ public class ProjectController {
             projectService.deleteProjectPost(id);
             responseEntity = new ResponseEntity<>("게시글을 성공적으로 삭제했습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e + "게시글 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -93,7 +93,7 @@ public class ProjectController {
             projectService.changePostState(id, param.get("state"));
             responseEntity = new ResponseEntity<>("성공적으로 수정하였습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e + " 상태 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;

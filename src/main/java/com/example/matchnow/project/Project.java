@@ -1,9 +1,10 @@
 package com.example.matchnow.project;
 
-import com.example.matchnow.BaseTimeEntity;
+import com.example.matchnow.BaseTime;
 import com.example.matchnow.category.Category;
 import com.example.matchnow.comment.Comment;
 import com.example.matchnow.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Builder
-public class Project extends BaseTimeEntity {
+public class Project extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="project_id")
@@ -50,5 +51,15 @@ public class Project extends BaseTimeEntity {
     @OneToMany(mappedBy = "project")
     private List<Comment> comments;
 
+    @Column(name = "is_deleted")
+    @JsonBackReference
+    private boolean isDeleted;
+
     public Project() {}
+
+    public void setUpdateProject(String title, String mainText, String image) {
+        this.title = title;
+        this.mainText = mainText;
+        this.inputImage = image;
+    }
 }

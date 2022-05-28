@@ -11,4 +11,12 @@ public class PostCommentDTO {
 
     private Long projectId;
 
+
+    public Comment toEntity(Project project, User user) {
+        return Comment.builder()
+                .project(project)
+                .user(user)
+                .text(text)
+                .build();
+    }
 }

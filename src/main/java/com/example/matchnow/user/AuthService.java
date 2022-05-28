@@ -23,17 +23,12 @@ public class AuthService {
         if(!checkValidEmail(userJoinDTO.getEmail()))
             throw new IllegalStateException("올바르지 않는 email입니다.");
 
-//        User user = new User();
-//        user.setEmail(userJoinDTO.getEmail());
-//        user.setPassword(passwordEncoder.encode(userJoinDTO.getPassword()));
-//        user.setUsername(userJoinDTO.getUsername());
-
-        userRepository.join(userJoinDTO.toEntity());
+        userRepository.save(userJoinDTO.toEntity());
     }
 
     private void validateDuplicateUser(UserJoinDTO userJoinDTO) {
-        List<User> users = userRepository.findByEmail(userJoinDTO.getEmail());
-        if(!users.isEmpty())
+        User user = userRepository.findByEmail(userJoinDTO.getEmail()).get();
+        if(user == null)
             throw new IllegalStateException("이미 가입되어 있는 email입니다.");
     }
 

@@ -20,7 +20,7 @@ public class StackService {
 
     @Transactional
     public void addMySkill(List<AddSkillStackDTO> stackList, String email){
-        User user = userRepository.findByEmail(email).get(0);
+        User user = userRepository.findByEmail(email).get();
         for (AddSkillStackDTO skillStack : stackList) {
             stackRepository.save(skillStack.toEntity(user));
         }

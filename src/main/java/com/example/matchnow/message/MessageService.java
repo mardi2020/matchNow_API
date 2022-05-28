@@ -21,8 +21,8 @@ public class MessageService {
 
     @Transactional
     public List<String> sendMessage(SendMessageDTO sendMessageDTO, String myEmail) {
-        User from = userRepository.findByEmail(myEmail).get(0);
-        User to = userRepository.findByEmail(sendMessageDTO.getReceiver()).get(0);
+        User from = userRepository.findByEmail(myEmail).get();
+        User to = userRepository.findByEmail(sendMessageDTO.getReceiver()).get();
 
         messageRepository.save(sendMessageDTO.toEntity(from, to));
 

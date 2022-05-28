@@ -17,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Comment extends BaseTime {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="comment_id")
     private Long commentId;
 
@@ -33,7 +33,7 @@ public class Comment extends BaseTime {
     private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="comment_user_id", insertable = false, updatable = false)
+    @JoinColumn(name="comment_user_id")
     @JsonIgnoreProperties({"email", "githubLink", "blogLink", "job",
             "modifiedDate", "createdDate", "modifiedDate", "skillStackList",
             "comments", "hibernateLazyInitializer", "sendMessageList", "receivedMessageList"

@@ -2,11 +2,13 @@ package com.example.matchnow.project;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 
 @Data
+@NoArgsConstructor
 public class PostedProjectDTO {
 
     private Long projectId;

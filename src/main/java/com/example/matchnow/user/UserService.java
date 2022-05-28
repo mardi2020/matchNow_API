@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,33 +20,22 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-
-    public List<User> findUsers() {
-        return userRepository.findAll();
-    }
-
-    public User findUser(Long userId) {
-        return userRepository.findById(userId);
-    }
-
     public User findUserByEmail(String email) {
-        List<User> users = userRepository.findByEmail(email);
-        if (users.isEmpty()) {
+        User user = userRepository.findByEmail(email).get();
+        if (user == null) {
             throw new UsernameNotFoundException("User not found with email:" + email);
         }
-        return users.get(0);
+        return user;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // 로그인을 하기 위해 가입된 user정보를 조회하는 메서드
 
-        List<User> users = userRepository.findByEmail(email);
-        if (users.isEmpty()) {
+        User user = userRepository.findByEmail(email).get();
+        if (user == null) {
             throw new UsernameNotFoundException("User not found with email:" + email);
         }
-        User user = users.get(0);
-//        System.out.println("user = " + user);
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 

@@ -12,7 +12,4 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface StackRepository extends JpaRepository<SkillStack, Long> {
 
-    @Query(value="SELECT stacks FROM SkillStack stacks WHERE stacks.skillStackId=?1")
-    List<SkillStack> findAll(String email);
-
 }

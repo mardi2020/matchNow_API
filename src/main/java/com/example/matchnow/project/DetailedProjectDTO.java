@@ -4,12 +4,14 @@ import com.example.matchnow.comment.Comment;
 import com.example.matchnow.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Data
+@NoArgsConstructor
 public class DetailedProjectDTO {
 
     private Long projectId;

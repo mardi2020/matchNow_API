@@ -13,6 +13,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -21,7 +22,7 @@ public class ProjectService {
 
     @Transactional
     public String uploadProjectPost(UploadProjectDTO projectDTO, String email) {
-        User userInfo = userRepository.findByEmail(email).get(0);
+        User userInfo = userRepository.findByEmail(email).get();
 
         projectRepository.save(projectDTO.toEntity(userInfo));
 

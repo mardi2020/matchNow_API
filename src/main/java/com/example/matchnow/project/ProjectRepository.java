@@ -21,5 +21,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query(value="SELECT project FROM Project project WHERE project.projectId=?1")
     List<Project> detailProjectPost(Long id);
 
+    List<Project> findByCategory(Type category);
+
 //    void addTeamMember(List<User> members);
 }

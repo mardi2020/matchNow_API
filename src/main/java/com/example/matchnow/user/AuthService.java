@@ -1,11 +1,13 @@
 package com.example.matchnow.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @Service
@@ -23,13 +25,14 @@ public class AuthService {
         if(!checkValidEmail(userJoinDTO.getEmail()))
             throw new IllegalStateException("올바르지 않는 email입니다.");
 
-        userRepository.save(userJoinDTO.toEntity());
+        User user = userJoinDTO.toEntity(passwordEncoder.encode(userJoinDTO.getPassword()));
+        userRepository.save(user);
     }
 
     private void validateDuplicateUser(UserJoinDTO userJoinDTO) {
-        User user = userRepository.findByEmail(userJoinDTO.getEmail()).get();
-        if(user == null)
-            throw new IllegalStateException("이미 가입되어 있는 email입니다.");
+        if(userRepository.findByEmail(userJoinDTO.getEmail()).isPresent())
+            throw new IllegalStateException("이미 존재하는 email입니다.");
+
     }
 
     private boolean checkValidEmail(String email) {

@@ -1,7 +1,6 @@
 package com.example.matchnow.project;
 
 import com.example.matchnow.BaseTime;
-import com.example.matchnow.category.Category;
 import com.example.matchnow.comment.Comment;
 import com.example.matchnow.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -45,8 +44,8 @@ public class Project extends BaseTime {
     @Enumerated(EnumType.ORDINAL)
     private State state;
 
-    @OneToMany(mappedBy = "project")
-    private List<Category> categoryList;
+    @Enumerated(EnumType.STRING)
+    private Type category;
 
     @OneToMany(mappedBy = "project")
     private List<Comment> comments;
@@ -57,9 +56,10 @@ public class Project extends BaseTime {
 
     public Project() {}
 
-    public void setUpdateProject(String title, String mainText, String image) {
+    public void setUpdateProject(String title, String mainText, String image, String type) {
         this.title = title;
         this.mainText = mainText;
         this.inputImage = image;
+        this.category = Type.valueOf(type);
     }
 }

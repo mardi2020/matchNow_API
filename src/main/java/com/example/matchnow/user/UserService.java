@@ -53,4 +53,10 @@ public class UserService implements UserDetailsService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         userRepository.updateLoginDate(email, sdf.format(System.currentTimeMillis()));
     }
+
+    @Transactional
+    public void updateMyInfo(User user, UpdateMyInfoDTO myInfo) {
+        user.setMyInfo(myInfo);
+        userRepository.save(user);
+    }
 }

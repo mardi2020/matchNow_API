@@ -3,6 +3,7 @@ package com.example.matchnow.project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -97,5 +98,15 @@ public class ProjectController {
         }
 
         return responseEntity;
+    }
+
+    @GetMapping(value="/project/category")
+    public ResponseEntity<?> findAllByCategory(@RequestParam("category") String category) {
+        try {
+            List<PostedProjectDTO> projects = projectService.filteringPost(category);
+            return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,8 +67,23 @@ public class UserController {
         }
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         User user = userService.findUserByEmail(principal.getUsername());
+        try {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
 
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @PatchMapping(value = "/me")
+    public ResponseEntity<?> updateMyInfo(@RequestBody UpdateMyInfoDTO myinfo, Principal principal) {
+        try {
+            String email = principal.getName();
+            User user = userService.findUserByEmail(email);
+            userService.updateMyInfo(user, myinfo);
+            return new ResponseEntity<>("내 정보 수정 완료", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

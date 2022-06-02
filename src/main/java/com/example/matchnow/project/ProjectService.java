@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +50,8 @@ public class ProjectService {
 
         entity.setUpdateProject(updateProjectDTO.getTitle(),
                 updateProjectDTO.getMainText(),
-                updateProjectDTO.getImage());
+                updateProjectDTO.getImage(),
+                updateProjectDTO.getCategory().getValue());
 
         projectRepository.save(entity);
 
@@ -74,5 +76,12 @@ public class ProjectService {
     @Transactional
     public void changePostState(Long id, int state) {
         projectRepository.changePostState(id, state);
+    }
+
+    public List<PostedProjectDTO> filteringPost(String category) {
+        List<Project> projectByCategory = projectRepository.findByCategory(Type.valueOf(category));
+        return projectByCategory.stream().map(
+                PostedProjectDTO::new
+        ).collect(Collectors.toList());
     }
 }

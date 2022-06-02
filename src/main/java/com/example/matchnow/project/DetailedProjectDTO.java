@@ -30,6 +30,8 @@ public class DetailedProjectDTO {
 
     private State state;
 
+    private Type category;
+
     public void setUser(User source){
         writer = source.getUsername();
     }
@@ -43,5 +45,6 @@ public class DetailedProjectDTO {
         this.wantCnt = entity.getWantCnt();
         this.nowPeopleCnt = entity.getNowPeopleCnt();
         this.state = entity.getState();
+        this.category = entity.getCategory();
     }
 }

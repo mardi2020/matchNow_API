@@ -20,6 +20,8 @@ public class UpdateProjectDTO {
 
     private String image;
 
+    private Type category;
+
     public Project toEntity(Long id, User user) {
         return Project.builder()
                 .projectId(id)
@@ -27,6 +29,7 @@ public class UpdateProjectDTO {
                 .title(title)
                 .mainText(mainText)
                 .inputImage(image)
+                .category(category)
                 .build();
     }
 }

@@ -24,6 +24,8 @@ public class UploadProjectDTO {
 
     private int nowPeopleCnt;
 
+    private Type category;
+
     public Project toEntity(User user) {
         return Project.builder()
                 .mainText(mainText)
@@ -33,6 +35,7 @@ public class UploadProjectDTO {
                 .nowPeopleCnt(nowPeopleCnt)
                 .user(user)
                 .state(State.RECRUITING)
+                .category(category)
                 .build();
     }
 }

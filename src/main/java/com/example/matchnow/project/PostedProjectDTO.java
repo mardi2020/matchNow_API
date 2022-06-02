@@ -21,11 +21,14 @@ public class PostedProjectDTO {
 
     private String writer;
 
+    private Type category;
+
     public PostedProjectDTO(Project entity) {
         this.projectId = entity.getProjectId();
         this.title = entity.getTitle();
         this.createAt = entity.getCreatedDate();
         this.state = entity.getState();
         this.writer = entity.getUser().getUsername();
+        this.category = entity.getCategory();
     }
 }

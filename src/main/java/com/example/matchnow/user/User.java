@@ -6,6 +6,7 @@ import com.example.matchnow.message.Message;
 import com.example.matchnow.skillStack.SkillStack;
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,9 +14,13 @@ import java.util.List;
 
 @Entity
 @Table(name="USERS")
-@NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
+@DynamicUpdate
 public class User extends BaseTime {
+
+    public User() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,17 +74,9 @@ public class User extends BaseTime {
     @JoinColumn(name="comment_user_id")
     private List<Comment> comments = new ArrayList<>();
 
-
-    @Builder
-    public User(String email, String username, String password) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-    }
-
-    @Builder
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public void setMyInfo(UpdateMyInfoDTO myInfo) {
+        this.githubLink = myInfo.getGithubLink();
+        this.blogLink = myInfo.getBlogLink();
+        this.job = myInfo.getJob();
     }
 }

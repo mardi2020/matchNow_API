@@ -23,5 +23,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByCategory(Type category);
 
+    List<Project> findByTitleContaining(String keyword); // LIKE %keyword%
+
 //    void addTeamMember(List<User> members);
 }

@@ -4,8 +4,13 @@ package com.example.matchnow.project;
 import com.example.matchnow.user.User;
 import com.example.matchnow.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,5 +88,19 @@ public class ProjectService {
         return projectByCategory.stream().map(
                 PostedProjectDTO::new
         ).collect(Collectors.toList());
+    }
+
+    public List<PostedProjectDTO> searchByKeyword(String keyword) {
+        List<Project> projectList = projectRepository.findByTitleContaining(keyword);
+
+        return projectList.stream().map(
+                PostedProjectDTO::new
+        ).collect(Collectors.toList());
+    }
+
+    public Page<PostedProjectDTO> postByPage(Pageable pageable) {
+        return projectRepository.findAll(pageable).map(
+                PostedProjectDTO::new
+        );
     }
 }

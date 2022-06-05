@@ -44,6 +44,7 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: spring-build123
     key: matchnow.zip
+    bundle_type: zip
     application: matchnow
     deployment_group: matchnow-group
     region: us-west-2

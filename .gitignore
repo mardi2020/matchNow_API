@@ -39,3 +39,4 @@ out/
 /src/main/resources/schema.sql
 java/
 application-oauth.properties
+/src/test/

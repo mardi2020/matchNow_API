@@ -9,7 +9,6 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,28 +50,28 @@ public class User extends BaseTime {
     private Role role;
 
     @OneToMany(mappedBy = "user") // user가 가진 스킬 스택
-    private List<SkillStack> skillStackList = new ArrayList<>();
+    private List<SkillStack> skillStackList;
 
     // 내가 보낸 쪽지 목룍
     @OneToMany(mappedBy = "sender")
     @JsonIgnoreProperties({
             "sender"
     })
-    private List<Message> sendMessageList = new ArrayList<>();
+    private List<Message> sendMessageList;
 
     // 받은 쪽지 목록
     @OneToMany(mappedBy = "recevier")
     @JsonIgnoreProperties({
             "recevier"
     })
-    private List<Message> receivedMessageList = new ArrayList<>();
+    private List<Message> receivedMessageList;
 
     @JsonIgnoreProperties({
             "deleted", "modifiedDate"
     })
     @OneToMany
     @JoinColumn(name="comment_user_id")
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     public void setMyInfo(UpdateMyInfoDTO myInfo) {
         this.githubLink = myInfo.getGithubLink();

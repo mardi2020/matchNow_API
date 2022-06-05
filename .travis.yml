@@ -20,10 +20,24 @@ cache:
 
 script: "./gradlew clean build"
 
-
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS matchnow;'
 
+before_deploy:
+  - zip -r matchnow *
+  - mkdir -p deploy
+  - mv matchnow.zip deploy/matchnow.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-build-jar
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
 
 
 notifications:

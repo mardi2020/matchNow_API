@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -35,17 +36,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
 //                .antMatchers("/me").authenticated()
-                .anyRequest().permitAll();// 그게 아닌 모든 주소는 인증 필요 없음
+                .anyRequest().permitAll()// 그게 아닌 모든 주소는 인증 필요 없음
 //                .and()
 //                .formLogin()     // 로그인 설정
 //                .loginPage("/")      // 커스텀 login 페이지를 사용
 //                .defaultSuccessUrl("/files")      // 로그인 성공 시 이동할 페이지
 //                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/")
-//                .invalidateHttpSession(true)    // 세션 초기화
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/me")
+                .invalidateHttpSession(true);    // 세션 초기화
 //                .and()
 //                .exceptionHandling();
     }

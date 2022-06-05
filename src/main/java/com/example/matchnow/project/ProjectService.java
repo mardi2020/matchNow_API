@@ -90,12 +90,10 @@ public class ProjectService {
         ).collect(Collectors.toList());
     }
 
-    public List<PostedProjectDTO> searchByKeyword(String keyword) {
-        List<Project> projectList = projectRepository.findByTitleContaining(keyword);
-
-        return projectList.stream().map(
+    public Page<PostedProjectDTO> searchByKeyword(String keyword, Pageable pageable) {
+        return projectRepository.findByTitleContaining(keyword, pageable).map(
                 PostedProjectDTO::new
-        ).collect(Collectors.toList());
+        );
     }
 
     public Page<PostedProjectDTO> postByPage(Pageable pageable) {

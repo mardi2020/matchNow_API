@@ -115,10 +115,10 @@ public class ProjectController {
     }
 
     @GetMapping(value="/project/search")
-    public ResponseEntity<?> searchByKeyword(@RequestParam("keyword") String keyword) {
+    public ResponseEntity<?> searchByKeyword(@RequestParam("keyword") String keyword,
+                                             @PageableDefault(size=6, sort="projectId", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            System.out.println("keyword = " + keyword);
-            List<PostedProjectDTO> posts = projectService.searchByKeyword(keyword.strip());
+            Page<PostedProjectDTO> posts = projectService.searchByKeyword(keyword, pageable);
             return new ResponseEntity<>(posts, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

@@ -1,5 +1,7 @@
 package com.example.matchnow.project;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,7 +25,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByCategory(Type category);
 
-    List<Project> findByTitleContaining(String keyword); // LIKE %keyword%
+    Page<Project> findByTitleContaining(String keyword, Pageable pageable); // LIKE %keyword%
 
 //    void addTeamMember(List<User> members);
 }

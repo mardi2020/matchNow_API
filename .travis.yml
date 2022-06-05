@@ -32,8 +32,8 @@ deploy:
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: spring-build-jar
-    region: ap-northeast-2
+    bucket: spring-build123
+    region: us-west-2
     skip_cleanup: true
     acl: private
     local_dir: deploy
@@ -42,7 +42,7 @@ deploy:
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
-    bucket: spring-build-jar
+    bucket: spring-build123
     key: matchnow.zip
     application: matchnow
     deployment_group: matchnow-group

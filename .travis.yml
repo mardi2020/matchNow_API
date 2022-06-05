@@ -24,9 +24,15 @@ before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS matchnow;'
 
 before_deploy:
-  - zip -r matchnow *
+  #- zip -r matchnow *
   - mkdir -p deploy
-  - mv matchnow.zip deploy/matchnow.zip
+  - cp scripts/*.sh deploy/
+  - cp appspec.yml deploy/
+  - cp build/libs/*.jar deploy/
+  - cd deploy && zip -r deploy *
+  - cd ../ && mkdir -p deployed
+  - mv deploy/deploy.zip deployed/matchnow.zip
+  #- mv matchnow.zip deploy/matchnow.zip
 
 deploy:
   - provider: s3
@@ -36,7 +42,7 @@ deploy:
     region: us-west-2
     skip_cleanup: true
     acl: private
-    local_dir: deploy
+    local_dir: deployed
     wait-until-deployed: true
 
   - provider: codedeploy

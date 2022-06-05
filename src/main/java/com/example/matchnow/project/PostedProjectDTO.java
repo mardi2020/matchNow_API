@@ -25,6 +25,10 @@ public class PostedProjectDTO {
 
     private Type category;
 
+    private int nowCnt;
+
+    private int wantCnt;
+
     public PostedProjectDTO(Project entity) {
         this.projectId = entity.getProjectId();
         this.title = entity.getTitle();
@@ -32,5 +36,7 @@ public class PostedProjectDTO {
         this.state = entity.getState();
         this.writer = entity.getUser().getUsername();
         this.category = entity.getCategory();
+        this.nowCnt = entity.getNowPeopleCnt();
+        this.wantCnt = entity.getWantCnt();
     }
 }

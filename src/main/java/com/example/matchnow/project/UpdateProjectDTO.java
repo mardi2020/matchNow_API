@@ -22,6 +22,7 @@ public class UpdateProjectDTO {
 
     private Type category;
 
+
     public Project toEntity(Long id, User user) {
         return Project.builder()
                 .projectId(id)

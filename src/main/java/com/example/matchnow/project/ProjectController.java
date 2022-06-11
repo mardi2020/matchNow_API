@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -35,7 +36,7 @@ public class ProjectController {
     }
 
     @PostMapping(value="project")
-    public ResponseEntity<?> uploadProjectPost(@RequestBody UploadProjectDTO uploadProjectDTO, Principal principal) {
+    public ResponseEntity<?> uploadProjectPost(@Validated @RequestBody UploadProjectDTO uploadProjectDTO, Principal principal) {
         ResponseEntity<?> responseEntity;
         try {
             String email = principal.getName();
@@ -49,7 +50,7 @@ public class ProjectController {
     }
 
     @PatchMapping(value="project/{id}")
-    public ResponseEntity<?> updateProjectPost(@PathVariable Long id, @RequestBody UpdateProjectDTO updateProjectDTO) {
+    public ResponseEntity<?> updateProjectPost(@PathVariable Long id, @Validated @RequestBody UpdateProjectDTO updateProjectDTO) {
         ResponseEntity<?> responseEntity;
 
         try {

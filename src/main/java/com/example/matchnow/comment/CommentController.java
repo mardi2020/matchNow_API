@@ -20,7 +20,7 @@ public class CommentController {
             List<ResponseCommentDTO> allComment = commentService.findAllComment(id);
             return new ResponseEntity<>(allComment, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("댓글을 불러오지 못했습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -30,7 +30,7 @@ public class CommentController {
             commentService.postComment(postCommentDTO, principal.getName());
             return new ResponseEntity<>(principal.getName() + "님의 댓글"+ postCommentDTO.getText()+ " 추가 성공!", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e + "댓글 추가 실패", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -40,7 +40,7 @@ public class CommentController {
             commentService.deleteComment(id);
             return new ResponseEntity<>("댓글을 삭제했습니다.", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e + "댓글을 삭제하지 못했습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -18,7 +18,7 @@ public class SkillStack {
     public SkillStack() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="skill_stack_id")
     private Long skillStackId;
 

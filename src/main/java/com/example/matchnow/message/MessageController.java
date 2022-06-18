@@ -23,7 +23,7 @@ public class MessageController {
             List<String> sendTo = messageService.sendMessage(sendMessageDTO, principal.getName());
             responseEntity = new ResponseEntity<>(sendTo.get(0) + "님의 메세지가 " + sendTo.get(1) + "님께 전송 완료!", HttpStatus.OK);
         }catch (Exception e) {
-            responseEntity = new ResponseEntity<>(e + "메세지 전송 실패", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -37,7 +37,7 @@ public class MessageController {
             List<ReceivedMessageDTO> messages = messageService.findAllRecv(email);
             responseEntity = new ResponseEntity<>(messages, HttpStatus.OK);
         }catch (Exception e) {
-            responseEntity = new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -51,7 +51,7 @@ public class MessageController {
             List<SendMessageDTO> messages = messageService.findAllSend(email);
             responseEntity = new ResponseEntity<>(messages, HttpStatus.OK);
         }catch (Exception e) {
-            responseEntity = new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -64,7 +64,7 @@ public class MessageController {
             messageService.deleteMessage(id);
             responseEntity = new ResponseEntity<>("메시지를 삭제했습니다.", HttpStatus.OK);
         }catch (Exception e) {
-            responseEntity = new ResponseEntity<>("메시지 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;

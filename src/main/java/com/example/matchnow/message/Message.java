@@ -19,7 +19,7 @@ public class Message {
 
     @Id
     @Column(name="message_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long messageId;
 
     @Column(nullable = false)

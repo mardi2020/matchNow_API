@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class Project extends BaseTime {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="project_id")
     private Long projectId;
 

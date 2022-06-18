@@ -26,7 +26,7 @@ public class StackController {
             stackService.addMySkill(stackDTOList, principal.getName());
             responseEntity = new ResponseEntity<>("기술 등록 성공", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("기술 등록에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -40,7 +40,7 @@ public class StackController {
             stackService.deleteMySkill(deleteDtoList);
             responseEntity = new ResponseEntity<>("해당 기술을 성공적으로 삭제했습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>(e + "오류로 인하여 삭제하지 못했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;

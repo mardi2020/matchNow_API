@@ -7,7 +7,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,7 @@ public class ProjectController {
 
             responseEntity = new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<>("모든 게시글을 찾지 못했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -44,7 +43,7 @@ public class ProjectController {
             responseEntity = new ResponseEntity<>(username + "님의 "
                     + uploadProjectDTO.getTitle() + "글 등록 성공!", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글을 등록하지 못했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -57,7 +56,7 @@ public class ProjectController {
             projectService.updateProjectPost(id, updateProjectDTO);
             responseEntity = new ResponseEntity<>("게시글을 성공적으로 수정했습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -71,7 +70,7 @@ public class ProjectController {
             projectService.deleteProjectPost(id);
             responseEntity = new ResponseEntity<>("게시글을 성공적으로 삭제했습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글 삭제에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -85,7 +84,7 @@ public class ProjectController {
             DetailedProjectDTO detailedProjectDTO = projectService.detailProjectPost(id);
             responseEntity = new ResponseEntity<>(detailedProjectDTO, HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("게시글 가져오기에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -99,7 +98,7 @@ public class ProjectController {
             projectService.changePostState(id, param.get("state"));
             responseEntity = new ResponseEntity<>("성공적으로 수정하였습니다.", HttpStatus.OK);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>("상태 수정에 실패했습니다.", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
         return responseEntity;
@@ -111,7 +110,7 @@ public class ProjectController {
             List<PostedProjectDTO> projects = projectService.filteringPost(category);
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("분류별 보기에 실패했습니다. \n" + e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -122,7 +121,7 @@ public class ProjectController {
             Page<PostedProjectDTO> posts = projectService.searchByKeyword(keyword, pageable);
             return new ResponseEntity<>(posts, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -133,7 +132,7 @@ public class ProjectController {
             Page<PostedProjectDTO> page = projectService.postByPage(pageable);
             return new ResponseEntity<>(page, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 }

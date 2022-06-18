@@ -26,18 +26,15 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> registerUserPOST(@RequestBody UserJoinDTO userJoinDTO) {
-        ResponseEntity<String> responseEntity;
 
         try {
             authService.join(userJoinDTO);
             String email = userJoinDTO.getEmail();
-            responseEntity = new ResponseEntity<>(email + "님 회원 가입 성공!", HttpStatus.OK);
+            return new ResponseEntity<>(email + "님 회원 가입 성공!", HttpStatus.OK);
 
         } catch(Exception e) {
-            responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
-
-        return responseEntity;
     }
 
     @PostMapping(value = "/login")
@@ -56,7 +53,7 @@ public class UserController {
             return new ResponseEntity<>("로그인 성공!", HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("[로그인 오류]: " + e , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,7 +67,7 @@ public class UserController {
         try {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("오류가 발생했습니다.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
     }
 

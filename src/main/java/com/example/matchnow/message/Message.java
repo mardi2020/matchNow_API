@@ -47,12 +47,4 @@ public class Message {
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     )
     private String sendDate;
-
-    @JsonBackReference
-    @Column(name="recv_deleted")
-    private boolean recevierDelete;
-
-    @JsonBackReference
-    @Column(name="send_deleted")
-    private boolean senderDelete;
 }

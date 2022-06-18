@@ -47,12 +47,8 @@ public class Project extends BaseTime {
     @Enumerated(EnumType.STRING)
     private Type category;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Comment> comments;
-
-    @Column(name = "is_deleted")
-    @JsonBackReference
-    private boolean isDeleted;
 
     public Project() {}
 

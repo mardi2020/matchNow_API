@@ -11,11 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-
-    @Modifying
-    @Query(value="update matchnow.projects set is_deleted=true where project_id=?1", nativeQuery = true)
-    void deleteProjectPost(Long id);
-
     @Modifying
     @Query(value="update matchnow.projects set state=?2 where project_id=?1", nativeQuery = true)
     void changePostState(Long id, int state); // 마감, 모집, 취소됨

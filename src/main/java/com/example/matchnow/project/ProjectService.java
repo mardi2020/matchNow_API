@@ -64,7 +64,8 @@ public class ProjectService {
 
     @Transactional
     public void deleteProjectPost(Long id) {
-        projectRepository.deleteProjectPost(id);
+        Project project = projectRepository.findById(id).get();
+        projectRepository.delete(project);
     }
 
 

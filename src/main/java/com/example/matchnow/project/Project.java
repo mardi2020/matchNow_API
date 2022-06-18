@@ -56,10 +56,10 @@ public class Project extends BaseTime {
 
     public Project() {}
 
-    public void setUpdateProject(String title, String mainText, String image, String type) {
+    public void setUpdateProject(String title, String mainText, String image, Type type) {
         this.title = title;
         this.mainText = mainText;
         this.inputImage = image;
-        this.category = Type.valueOf(type);
+        this.category = type;
     }
 }

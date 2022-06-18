@@ -56,7 +56,7 @@ public class ProjectService {
         entity.setUpdateProject(updateProjectDTO.getTitle(),
                 updateProjectDTO.getMainText(),
                 updateProjectDTO.getImage(),
-                updateProjectDTO.getCategory().getValue());
+                updateProjectDTO.getCategory());
 
         projectRepository.save(entity);
 
